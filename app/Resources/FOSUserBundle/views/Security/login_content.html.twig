@@ -1,0 +1,199 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<!-- CSS Styles -->
+{#<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">#}
+<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+
+<!-- Animate CSS -->
+<link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
+
+<!-- Revolution Slider -->
+<link rel="stylesheet" href="{{ asset('assets/js/plugins/revolution/css/settings.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/js/plugins/revolution/css/layers.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/js/plugins/revolution/css/navigation.css') }}">
+
+<!-- Owl Carousel -->
+<link rel="stylesheet" href="{{ asset('/assets/js/plugins/owl-carousel/owl.carousel.css') }}">
+
+<!-- Google Web Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,700,900' rel='stylesheet' type='text/css'>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="../maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<div class="container ws-page-container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+
+            <!-- Login Form -->
+            <form class="ws-login-form" action="{{ path("fos_user_security_check") }}" method="post">
+                {% if csrf_token %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                {% endif %}
+
+                {#====#}
+
+                {% if error %}
+                    <div id="erreur">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <br><br>
+                <!-- Username -->
+                <div class="form-group">
+                    <label class="control-label" for="username">{{ 'security.login.username'|trans }}<span>*</span></label>
+                    <input id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" class="form-control">
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password" class="control-label">{{ 'security.login.password'|trans }}<span>*</span></label>
+                    <input type="password" id="password" name="_password" required="required" autocomplete="current-password" class="form-control">
+                </div>
+
+                <!-- Checkbox -->
+                <div class="pull-left">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on">
+                            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>s
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pull-right">
+                    <div class="ws-forgot-pass">
+                        <a href="#x">Forgot your password ?</a>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="padding-top-x50"></div>
+
+                <!-- Button -->
+                <input class="btn ws-btn-fullwidth" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+
+                {#<a class="btn ws-btn-fullwidth">Sign in</a>#}
+                <br><br>
+                <!-- Facebook Button -->
+            </form>
+            <!-- End Login Form -->
+
+            <!-- Register Form-->
+            <div class="ws-register-form">
+
+                <!-- Link -->
+                <div class="ws-register-link">
+                    <a href="#ws-register-modal" data-toggle="modal">Click here to sign up for an account. </a>
+                </div>
+
+                <!-- Register Modal -->
+                <div class="modal fade" id="ws-register-modal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-10 col-sm-offset-1">
+
+                                    <div class="modal-body">
+                                        <!-- Register Form -->
+                                        {#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}#}
+
+                                        <form  name="fos_user_registration_form" action="{{ path('fos_user_registration_register') }}" method="POST" class="fos_user_registration_register ws-register-form" id="loginform">
+                                            <div class="form-group" id="fos_user_registration_form"></div>
+
+                                            <h3>Créer un compte</h3>
+                                            <div class="ws-separator"></div>
+                                            <!-- Name -->
+                                            <div class="form-group">
+                                                <label class="control-label">Nom de famille<span>*</span></label>
+                                                {#{{ form_widget(form.nom, { 'attr': {'class': 'form-control', 'placeholder': "Nom de famille" }})}}#}
+                                                <input type="text" class="form-control" id="fos_user_registration_form_nom" name="fos_user_registration_form[nom]">
+                                            </div>
+
+                                            <!-- Prenom -->
+                                            <div class="form-group">
+                                                <label class="control-label">Prenom <span>*</span></label>
+                                                {#{{ form_widget(form.prenom, { 'attr': {'class': 'form-control', 'placeholder': "Prenom" } }) }}#}
+                                                <input type="text" class="form-control" id="fos_user_registration_form_prenom" name="fos_user_registration_form[prenom]">
+                                            </div>
+
+                                            <!-- Nom d'utilisateur -->
+                                            <div class="form-group">
+                                                <label class="control-label">Nom d'utilisateur<span>*</span></label>
+                                                {#{{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'form.username'|trans } }) }}
+                                                {{ form_errors(form.username) }}#}
+                                                <input type="text" class="form-control" id="fos_user_registration_form_username" name="fos_user_registration_form[username]">
+                                            </div>
+
+                                            <!-- Adrese -->
+                                            <div class="form-group">
+                                                <label class="control-label">Adresse e-mail <span>*</span></label>
+                                                {#{{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'form.email'|trans } }) }}
+                                                {{ form_errors(form.email) }}#}
+                                                <input type="text" class="form-control" id="fos_user_registration_form_email" name="fos_user_registration_form[email]">
+                                            </div>
+
+                                            <!-- Password -->
+                                            <div class="form-group">
+                                                <label class="control-label">Mot de passe <span>*</span></label>
+                                                {#{{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'placeholder': 'form.password'|trans } }) }}
+                                                {{ form_errors(form.plainPassword.first) }}#}
+                                                <input type="password" class="form-control" id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]">
+                                            </div>
+
+                                            <!-- Password -->
+                                            <div class="form-group">
+                                                <label class="control-label">Répéter le mot de passe <span>*</span></label>
+                                                {#{{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'form.password_confirmation'|trans } }) }}
+                                                {{ form_errors(form.plainPassword.second) }}
+                                                {{ form_rest(form)  }}#}
+                                                <input type="password" class="form-control" id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]">
+                                            </div>
+
+                                            {% if csrf_token %}
+                                                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                                            {% endif %}
+                                            <input type="hidden" id="fos_user_registration_form__token" name="fos_user_registration_form[_token]" value="Hwg9poLZTGl2AoL7Wb2bq9VyCInAkoJL5v-n-IhyjkA" />
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox">I accept the <a href="faq.html">Terms of Service</a>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <input class="btn ws-btn-fullwidth" type="submit" value="{{ 'registration.submit'|trans }}">
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <!-- Button -->
+
+                                        <!-- Facebook Button -->
+                                        <!-- Link -->
+                                        <div class="ws-register-link">
+                                            <a href="#ws-register-modal" data-toggle="modal">Vous avez déjà un compte? Se connecter.</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- End Register Modal -->
+            </div>
+            <!-- End Register -->
+
+        </div>
+    </div>
+</div>
+<style>
+    #erreur{
+        color: red;
+        font-size: large;
+    }
+</style>
+

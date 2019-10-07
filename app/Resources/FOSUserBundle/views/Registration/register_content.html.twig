@@ -1,0 +1,85 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<!-- CSS Styles -->
+{#<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">#}
+<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+
+<!-- Animate CSS -->
+<link rel="stylesheet" href="{{ asset('assets/css/animate.min.css') }}">
+
+<!-- Revolution Slider -->
+<link rel="stylesheet" href="{{ asset('assets/js/plugins/revolution/css/settings.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/js/plugins/revolution/css/layers.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/js/plugins/revolution/css/navigation.css') }}">
+
+<!-- Owl Carousel -->
+<link rel="stylesheet" href="{{ asset('/assets/js/plugins/owl-carousel/owl.carousel.css') }}">
+
+<!-- Google Web Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,700,900' rel='stylesheet' type='text/css'>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="../maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+{# =============================================================================================================== #}
+<div class="container ws-page-container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+<div class="modal-body">
+    <!-- Register Form -->
+    <form class="ws-login-form" name="fos_user_registration_form" action="{{ path('fos_user_registration_register') }}" method="POST">
+        <div class="form-group" id="fos_user_registration_form"></div>
+
+        <center><h3>Créer un compte</h3></center>
+        <div class="ws-separator"></div>
+        <!-- Name -->
+        <div class="form-group">
+            {{ form_widget(form.nom, { 'attr': {'class': 'form-control', 'placeholder': "Nom de famille" }})}}
+        </div>
+
+        <!-- Prenom -->
+        <div class="form-group">
+
+            {{ form_widget(form.prenom, { 'attr': {'class': 'form-control', 'placeholder': "Prenom" } }) }}
+        </div>
+
+        <!-- Nom d'utilisateur -->
+        <div class="form-group">
+            {{ form_errors(form.username) }}<br>
+            {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'form.username'|trans } }) }}
+
+        </div>
+
+        <!-- Adrese -->
+        <div class="form-group">
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'form.email'|trans } }) }}
+
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            {{ form_errors(form.plainPassword.first) }}<br>
+            {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control', 'placeholder': 'form.password'|trans } }) }}
+
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            {{ form_errors(form.plainPassword.second) }}
+            {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control', 'placeholder': 'form.password_confirmation'|trans } }) }}
+
+            {{ form_rest(form)  }}
+        </div>
+        <input class="btn ws-btn-fullwidth" type="submit" value="{{ 'registration.submit'|trans }}">
+    </form>
+</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-group{
+        color: red;
+        font-size: large;
+    }
+</style>

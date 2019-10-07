@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+{% block banner_title %}
+    Nos partenaires
+{% endblock %}
+{% block content %}
+    {##}
+    <input class="origin" type="hidden" value="{{ user.addresse }}"/>
+    {% for destination in boutiques %}
+        <input class="destination" type="hidden" value="{{ destination.lieu }}">
+    {% endfor %}
+    <div id="map" style="width: 100%; height: 220px;"></div>
+    <div class="important-text customBorderColor"><strong></strong>
+        <p id="output"></p>
+    </div>
+    <section id="fromBlog">
+        <div class="container">
+            <h3 class="title-small font-additional font-weight-bold text-uppercase wow zoomIn" data-wow-delay="0.3s"
+                style="visibility: visible; animation-delay: 0.3s; animation-name: zoomIn;">Liste des boutiques et leurs
+                emplacements</h3>
+
+            <div class="blog-container">
+                <div class="starSeparator wow zoomIn" data-wow-delay="3.3s"
+                     style="visibility: visible; animation-delay: 0.3s; animation-name: zoomIn;">
+                    <span aria-hidden="true" class="icon-star"></span>
+                </div>
+
+                <div class="row">
+                    {{ render(controller('GestionBoutiquesBundle:Gestion:AfficherBoutiques2')) }}
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    {#============= GOOGLE MAPS =======================#}
+    <script src="{{ asset('assets/js/plugins/jquery-3.3.1.js') }}"></script>
+    <script>
+        function initMap() {
+            var bounds = new google.maps.LatLngBounds;
+            var markersArray = [];
+            var destinationArray = [];
+            $(".destination").each(function (index) {
+                console.log(index + ": " + $(this).val());
+                var dest = $(this).val();
+                destinationArray.push(dest);
+            });
+            var origin1 = $('.origin').val();
+
+            var destinationIcon = 'https://chart.googleapis.com/chart?' +
+                'chst=d_map_pin_letter&chld=D|FF0000|000000';
+            var originIcon = 'https://chart.googleapis.com/chart?' +
+                'chst=d_map_pin_letter&chld=O|FFFF00|000000';
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 55.53, lng: 9.4},
+                zoom: 8
+            });
+            var geocoder = new google.maps.Geocoder;
+
+            var service = new google.maps.DistanceMatrixService;
+            service.getDistanceMatrix({
+                origins: [origin1],
+                destinations: destinationArray,
+                travelMode: 'DRIVING',
+                unitSystem: google.maps.UnitSystem.METRIC,
+                avoidHighways: false,
+                avoidTolls: false
+            }, function (response, status) {
+                if (status !== 'OK') {
+                    alert('Error was: ' + status);
+                } else {
+                    var originList = response.originAddresses;
+                    var destinationList = response.destinationAddresses;
+                    var outputDiv = document.getElementById('output');
+                    outputDiv.innerHTML = '';
+                    deleteMarkers(markersArray);
+
+                    var showGeocodedAddressOnMap = function (asDestination) {
+                        var icon = asDestination ? destinationIcon : originIcon;
+                        return function (results, status) {
+                            if (status === 'OK') {
+                                map.fitBounds(bounds.extend(results[0].geometry.location));
+                                markersArray.push(new google.maps.Marker({
+                                    map: map,
+                                    position: results[0].geometry.location,
+                                    icon: icon
+                                }));
+                            } else {
+                                alert('Geocode was not successful due to: ' + status);
+                            }
+                        };
+                    };
+
+                    for (var i = 0; i < originList.length; i++) {
+                        var results = response.rows[i].elements;
+                        geocoder.geocode({'address': originList[i]},
+                            showGeocodedAddressOnMap(false));
+                        for (var j = 0; j < results.length; j++) {
+                            geocoder.geocode({'address': destinationList[j]},
+                                showGeocodedAddressOnMap(true));
+                            outputDiv.innerHTML += originList[i] + ' to ' + destinationList[j] +
+                                ': ' + results[j].distance.text + ' in ' +
+                                results[j].duration.text + '<br>';
+                        }
+                    }
+                }
+            });
+        }
+
+        function deleteMarkers(markersArray) {
+            for (var i = 0; i < markersArray.length; i++) {
+                markersArray[i].setMap(null);
+            }
+            markersArray = [];
+        }
+
+        /*$("a").click(function (e) {
+            e.preventDefault()
+        });*/
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-siudbD1jEhaIebiFGjWEzOd4aq8-WzA&callback=initMap">
+    </script>
+{% endblock %}

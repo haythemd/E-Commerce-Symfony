@@ -1,0 +1,52 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{#{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+    {{ form_widget(form) }}
+    <div>
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    </div>
+{{ form_end(form)}}#}
+
+
+{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+
+    <div class="form-group">
+
+    <center><h3>Modifier vos coordonées</h3></center>
+        <br><br>
+    <div class="ws-separator"></div>
+
+
+    <!-- Nom d'utilisateur -->
+    <div class="form-group">
+        {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'form.username'|trans } }) }}
+
+    </div>
+
+    <!-- Adrese -->
+    <div class="form-group">
+        {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'form.email'|trans } }) }}
+
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+        {{ form_widget(form.current_password, { 'attr': {'class': 'form-control', 'placeholder': 'form.password'|trans } }) }}
+
+    </div>
+
+    <!-- Password -->
+
+
+    </div>
+    <div>
+        <input class="btn ws-btn-fullwidth" type="submit" value="{{ 'profile.edit.submit'|trans }}">
+
+    </div>
+{{ form_end(form)}}
+
+
+
+
+
+

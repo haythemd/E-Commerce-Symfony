@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+{% block banner_title %}
+    {{ gerant.boutique.nomBoutique }}
+{% endblock %}
+{% block content %}
+    <section id="pageContent" class="page-content category-type_list">
+        <div class="container">
+            <div class="row">
+                <div class="sidebar col-lg-3 col-md-3 col-sm-3 col-xs-12 clearfix">
+                    <h3 class="sidebar-title font-additional font-weight-bold text-uppercase customColor wow fadeInUp"
+                        data-wow-delay="0.3s"
+                        style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">categories</h3>
+                    <ul class="categories-tree wow fadeInUp" data-wow-delay="0.3s"
+                        style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                        {% for categorie in categories %}
+                            <li>
+                                <a href="#" id="{{ categorie.nom }}"
+                                   class="disabled_a categorie_a font-additional font-weight-normal hover-focus-color color-third text-uppercase">
+                                    <span class="pull-left">{{ categorie.nom }}</span>
+                                    <span class="pull-right"></span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li>
+                            <a href="#" id="voir_tout"
+                               class="disabled_a font-additional font-weight-normal hover-focus-color color-third text-uppercase">
+                                <span class="pull-left">Voir tout</span>
+                                <span class="pull-right"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 clearfix">
+                    <div class="content-box">
+                        <div class="products-cat clearfix">
+                            <div class="input-group input-group-md icon-addon">
+                                <input type="text" placeholder="Recherche" name="" id="schbox"
+                                       class="form-control input_recherche">
+                                <i class="icon icon-search"></i>
+                                <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-inverse">Rechercher</button>
+                                        </span>
+                            </div>
+                            <ul class="products-list">
+                                <div style="position: static" class="important-text customBorderColor">
+                                    <span class="font-third font-weight-light pull-left"><strong>Description</strong><br>{{ gerant.boutique.description }}</span>
+                                </div>
+                                {# ============== BOUCLE FOR - AFFICHAGE DES PRODUITS ======================#}
+                                <input type="hidden" id="id_boutique" value="{{ gerant.boutique.id }}">
+                                <div class="contenu_produits">
+
+                                    {% for produit in gerant.boutique.produits %}
+                                        <input type="hidden" id="prod{{ produit.id }}" value="{{ produit.id }}">
+                                        <li id="produit{{ produit.id }}"
+                                            class="wow fadeInUp unproduit categorie_{{ produit.categorie.nom }}"
+                                            data-wow-delay="0.3s"
+                                            style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                                            <div class="product-list_item row">
+                                                <div class="product-list_item_img col-lg-4 col-md-4 col-sm-4 col-xs-12 clearfix">
+                                                    <a href="#" class="disabled_a">
+                                                        {#img 270*285#}
+                                                        {#<img class="product-list_item_img hvr-grow-rotate" src="{{ asset('front/media/270x285/2.jpg') }}" alt="Product">#}
+                                                        <img class="product-list_item_img hvr-grow-rotate"
+                                                             src="{{ asset('') }}{{ produit.image }}" alt="Product"
+                                                             style="height:220px; width:220px;">
+                                                    </a>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
+
+                                                    <div class="product-list-info">
+                                                        <div class="product-list_item_title">
+                                                            <h3 id="titre{{ produit.id }}"
+                                                                class="font-additional font-weight-bold text-uppercase">{{ produit.nomProduit }}</h3>
+                                                        </div>
+                                                        <div class="product-item_price font-additional font-weight-normal customColor">{{ produit.prix }}
+                                                            dt {#<span>$265.00</span>#}</div>
+                                                        <div id="descr{{ produit.id }}"
+                                                             class="product-list_item_desc font-main font-weight-normal color-third">{{ produit.description }}
+                                                            <br>{{ produit.categorie.nom }}</div>
+                                                        <a href="#" id="{{ produit.id }}"
+                                                           class="disabled_a ajouter_au_panier btn button-additional font-additional font-weight-normal text-uppercase hvr-rectangle-out hover-focus-bg before-bg">
+                                                            <span class="icon-basket-loaded" aria-hidden="true"></span>
+                                                            Ajouter au panier
+                                                        </a>
+                                                        {#<a href="#"
+                                                           class=" disabled_a btn button-border font-additional font-weight-normal text-uppercase hvr-rectangle-out hover-focus-border hover-focus-bg before-bg">
+                                                            <span class="icon-heart" aria-hidden="true"></span>
+                                                        </a>#}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {# ================================== FIN AFFICHAGE  ===========================================================#}
+                                    {% endfor %}
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $('.input_recherche').keyup(function () {
+            setTimeout(function () {
+                var valeur = $('.input_recherche').val();
+                console.log(valeur);
+                var id_boutique = $('#id_boutique').val();
+                console.log(id_boutique);
+                $.ajax({
+                    url: '{{ path('recherche_ajax') }}',
+                    type: 'POST',
+                    data: {
+                        'valeur': valeur,
+                        'id_boutique': id_boutique
+                    }
+                }).done(function (data) {
+                    $('.contenu_produits').html(data);
+                    console.log(data);
+                })
+            }, 500);
+        });
+
+        $(".categorie_a").click(function () {
+            var nom_cat = this.id;
+            $(".unproduit").hide(0);
+            $(".categorie_" + nom_cat).show(500);
+            /*setTimeout(function () {
+                $(".categorie_"+nom_cat).show(500);
+            }, 500);*/
+
+        });
+
+        $("#voir_tout").click(function () {
+            $(".unproduit").show(500);
+        });
+
+        $(".ajouter_au_panier").click(function () {
+                var produit_id = this.id;
+                //alert(produit_id);
+                var user_id = {{ app.user.id }};
+                $.ajax({
+                    url: '{{ path('ajouter_prod_au_panier') }}',
+                    type: 'POST',
+                    data: {
+                        'user_id': user_id,
+                        'produit_id': produit_id
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        //alert('success');
+                        var qtite = Number($('#qtite_panier').text());
+                        var num = 0;
+                        num = Number(qtite + 1);
+                        $('#qtite_panier').text(num);
+                        $('#produit' + produit_id).after(
+                            '<div id="succ" class="alert alert-success">'
+                            + '<center><strong>'
+                            + 'Le produit a été ajouté a votre panier!'
+                            + '</strong></center>'
+                            + '</div>');
+                        $('#succ').hide(0).slideDown(1500).delay(500).slideUp(1500);
+                        setTimeout(function () {
+                            $('#succ').remove();
+                        }, 4000);
+                        console.log(data);
+                    }, error: function (data) {
+                        alert('An error occured');
+                        console.log(data);
+                    }
+                })
+            }
+        );
+
+        $(".disabled_a").click(function (e) {
+            e.preventDefault()
+        });
+    </script>
+{% endblock %}

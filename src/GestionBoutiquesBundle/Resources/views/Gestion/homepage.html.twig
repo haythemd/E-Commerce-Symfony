@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}Accueil {% endblock %}
+{#{% block bg %}
+<header id="header" class="paralax header" style="background-image: url({{ asset('/assets/1.jpg') }});">
+    {% endblock %}#}
+    {% block txt %}
+        <div class="container header-content">
+            <span class="header-subtitle font-third font-weight-light color-main wow zoomIn" data-wow-delay="0.5s">artisanat en tunisie</span>
+            <h1 class="half-title clearfix">
+                <span class="half-title_left font-additional font-weight-normal color-main wow fadeInLeftBig" data-wow-delay="0.5s">ARTISANAT<br>AVEC</span>
+                <span class="half-title_right font-additional font-weight-bold color-main wow fadeInRightBig" data-wow-delay="0.5s">STYLE</span>
+            </h1>
+            <div class="text-center">
+                <div class="starSeparator wow zoomIn" data-wow-delay="0.5s">
+                    <span aria-hidden="true" class="icon-star"></span>
+                </div>
+            </div>
+            <div class="header-buttons">
+                <a href="product-details.html" class="btn button-border font-additional font-weight-bold hvr-rectangle-out hover-focus-bg hover-focus-border before-bg wow fadeInLeft" data-wow-delay="0.5s">NOS BOUTIQUES</a>
+                <a href="category.html" class="btn button-border font-additional font-weight-bold hvr-rectangle-out hover-focus-bg hover-focus-border before-bg wow fadeInRight" data-wow-delay="0.5s">VOIR TOUT</a>
+            </div>
+        </div>
+
+
+
+    {% endblock %}
+
+    {% block content %}
+        <section id="categories">
+            <div class="container clearfix">
+                <ul class="category-images">
+                    <li class="grid right-space two-width">
+                        <figure class="effect-bubba wow fadeInLeft" data-wow-delay="0.3s">
+                            <img src="/front/media/categories/5.jpg" alt="Category">
+                            <figcaption>
+                                <div class="category-images_content">
+                                    <h2 class="font-third font-weight-light text-uppercase color-main">ESPACE BOUTIQUES</h2>
+                                    <p class="font-additional font-weight-bold text-uppercase color-main line-text line-text_white">Visiter les boutiques disponibles</p>
+                                </div>
+                                <a href="#">View more</a>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="grid">
+                        <figure class="effect-bubba wow fadeInRight" data-wow-delay="0.3s">
+                            <img src="/front/media/categories/4.jpg" alt="Category">
+                            <figcaption>
+                                <div class="category-images_content">
+                                    <h2 class="font-third font-weight-light text-uppercase color-main">ACTUALITES</h2>
+                                    <p class="font-additional font-weight-bold text-uppercase color-main line-text line-text_white">Toutes les nouveautés</p>
+                                </div>
+                                <a href="#">View more</a>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="grid">
+                        <figure class="effect-bubba wow fadeInLeft" data-wow-delay="0.3s">
+                            <img src="/front/media/categories/1.jpg" alt="Category">
+                            <figcaption>
+                                <div class="category-images_content">
+                                    <h2 class="font-third font-weight-light text-uppercase color-main">ESPACE BROQUANTE</h2>
+                                    <p class="font-additional font-weight-bold text-uppercase color-main line-text line-text_white">Vendez et achetez ici</p>
+                                </div>
+                                <a href="#">View more</a>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="grid left-space right-space">
+                        <figure class="effect-bubba wow fadeInUp" data-wow-delay="0.3s">
+                            <img src="/front/media/categories/2.jpg" alt="Category">
+                            <figcaption>
+                                <div class="category-images_content">
+                                    <h2 class="font-third font-weight-light text-uppercase color-main">SERVICE APRES VENTE</h2>
+                                    <p class="font-additional font-weight-bold text-uppercase color-main line-text line-text_white">Services dispo 24/24</p>
+                                </div>
+                                <a href="#">View more</a>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="grid">
+                        <figure class="effect-bubba wow fadeInRight" data-wow-delay="0.3s">
+                            <img src="/front/media/categories/3.jpg" alt="Category">
+                            <figcaption>
+                                <div class="category-images_content">
+                                    <h2 class="font-third font-weight-light text-uppercase color-main">ESPACE EVENEMENTS</h2>
+                                    <p class="font-additional font-weight-bold text-uppercase color-main line-text line-text_white">Consulter les évènements a venir</p>
+                                </div>
+                                <a href="#">View more</a>
+                            </figcaption>
+                        </figure>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+        </section>
+        <section id="banner">
+            <div class="container banner-container wow fadeInUp" data-wow-delay="0.3s">
+                <div class="banner-item grid">
+                    <figure class="effect-bubba">
+                        <img src="/assets/liv.jpg" alt="Banner">
+                        <figcaption>
+                            <h2 class="font-third font-weight-light text-uppercase color-main">livraison gratuite sur tout achat</h2>
+                            <div class="font-additional font-weight-bold text-uppercase customColor">commandes passées gratuitement</div>
+                            <p class="font-third font-weight-light text-uppercase color-main line-text line-text_white">obtenir une livraison la plus rapide en 2 jours
+                            </p>
+                            <a href="#">View more</a>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+    {% endblock %}
+
+    {% block stylesheets %}
+    <style>
+        body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
+        h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
+        h1 { font-size: 36px; }
+        h2 { font-size: 21px; margin-bottom: 1em; }
+        p { margin: 0 0 1em 0; }
+        a { color: #0000F0; }
+        a:hover { text-decoration: none; }
+        code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
+        #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
+        #container { padding: 2em; }
+        #welcome, #status { margin-bottom: 2em; }
+        #welcome h1 span { display: block; font-size: 75%; }
+        #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
+        #icon-book { display: none; }
+
+        @media (min-width: 768px) {
+            #wrapper { width: 80%; margin: 2em auto; }
+            #icon-book { display: inline-block; }
+            #status a, #next a { display: block; }
+
+            @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+            @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+            .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
+        }
+        #header{
+            width: 1400px;
+            height: 680px;
+        }
+    </style>
+</header>
+
+{% endblock %}

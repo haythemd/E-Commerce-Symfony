@@ -1,0 +1,11 @@
+test_homepage:
+    path:     /
+    defaults: { _controller: TestBundle:Default:index }
+
+redirectme:
+    path:     /redirectme
+    defaults: { _controller: TestBundle:RedirectionC:redirectme }
+
+testapi:
+    path:     /test
+    defaults: { _controller: TestBundle:RedirectionC:redirectme }

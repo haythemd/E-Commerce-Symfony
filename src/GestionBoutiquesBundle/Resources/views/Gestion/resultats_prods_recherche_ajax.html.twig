@@ -1,0 +1,43 @@
+{% for produit in produits %}
+    <input type="hidden" id="prod{{ produit.id }}" value="{{ produit.id }}">
+    <li id="produit{{ produit.id }}"
+        class="wow fadeInUp unproduit categorie_{{ produit.categorie.nom }}"
+        data-wow-delay="0.3s"
+        style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+        <div class="product-list_item row">
+            <div class="product-list_item_img col-lg-4 col-md-4 col-sm-4 col-xs-12 clearfix">
+                <a href="#" class="disabled_a">
+                    {#img 270*285#}
+                    {#<img class="product-list_item_img hvr-grow-rotate" src="{{ asset('front/media/270x285/2.jpg') }}" alt="Product">#}
+                    <img class="product-list_item_img hvr-grow-rotate"
+                         src="{{ asset('') }}{{ produit.image }}" alt="Product"
+                         style="height:220px; width:220px;">
+                </a>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
+
+                <div class="product-list-info">
+                    <div class="product-list_item_title">
+                        <h3 id="titre{{ produit.id }}"
+                            class="font-additional font-weight-bold text-uppercase">{{ produit.nomProduit }}</h3>
+                    </div>
+                    <div class="product-item_price font-additional font-weight-normal customColor">{{ produit.prix }}
+                        dt {#<span>$265.00</span>#}</div>
+                    <div id="descr{{ produit.id }}"
+                         class="product-list_item_desc font-main font-weight-normal color-third">{{ produit.description }}
+                        <br>{{ produit.categorie.nom }}</div>
+                    <a href="#" id="{{ produit.id }}"
+                       class="disabled_a ajouter_au_panier btn button-additional font-additional font-weight-normal text-uppercase hvr-rectangle-out hover-focus-bg before-bg">
+                        <span class="icon-basket-loaded" aria-hidden="true"></span>
+                        Ajouter au panier
+                    </a>
+                    {#<a href="#"
+                       class=" disabled_a btn button-border font-additional font-weight-normal text-uppercase hvr-rectangle-out hover-focus-border hover-focus-bg before-bg">
+                        <span class="icon-heart" aria-hidden="true"></span>
+                    </a>#}
+                </div>
+            </div>
+        </div>
+    </li>
+    {# ================================== FIN AFFICHAGE  ===========================================================#}
+{% endfor %}

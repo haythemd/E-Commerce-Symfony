@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {#<link href="{{ asset('front/css/navcss.css') }}" rel="stylesheet">
+    <script src="{{ asset('front/js/nav.js.js') }}"></script>#}
+</head>
+<body>
+<form method="POST" action="{{ path('testbougalb') }}">
+    <input type="file" name="image">
+    <input type="submit">
+</form>
+{#{{ form_start(form) }}
+{{ form_row(form.image) }}
+{{ form_end(form) }}#}
+</body>
+</html>

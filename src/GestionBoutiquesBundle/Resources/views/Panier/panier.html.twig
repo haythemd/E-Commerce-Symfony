@@ -1,0 +1,267 @@
+{% extends 'base.html.twig' %}
+{% block banner_title %}
+    Mon Panier
+{% endblock %}
+{% block content %}
+    {% if msg is defined %}
+        {{ msg }}
+    {% else %}
+        <section id="pageContent" class="page-content category-type_list">
+            <div class="container">
+                <div class="row">
+                    <div class="sidebar col-lg-3 col-md-3 col-sm-3 col-xs-12 clearfix">
+                        <h3 class="sidebar-title font-additional font-weight-bold text-uppercase customColor wow fadeInUp"
+                            data-wow-delay="0.3s"
+                            style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                            Menu</h3>
+                        <ul class="categories-tree wow fadeInUp" data-wow-delay="0.3s"
+                            style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                            <li>
+                                <a href="#"
+                                   class="btn_commande disabled_a font-additional font-weight-normal hover-focus-color color-third text-uppercase">
+                                    <span class="pull-left">Créer commande</span>
+                                    <span class="pull-right"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 clearfix">
+                        <div class="content-box">
+                            <div class="liste_commande ">
+                                <div class="liste_commande important-text customBorderColor">
+                                    <strong>Votre commande.</strong>
+
+                                    <br><br>
+                                    <p>Prix total de vos achats:<h6 id="prix_total"></h6></p>
+                                </div>
+
+                                {% for produit in produits %}
+                                    {% if produit is not null %}
+                                        <div class="liste_commande important-text customBorderColor">
+                                            <div id="produitc{{ produit.id }}">
+                                                <br>
+                                                <p>Produit - {{ loop.index - 1 }}</p>
+
+                                                <img class=" disabled_a product-list_item_img hvr-grow-rotate"
+                                                     src="{{ asset('') }}{{ produit.image }}" alt="Product"
+                                                     style="height:80px; width:80px;">
+
+                                                <p>Nom: {{ produit.nomProduit }}</p>
+                                                <p>Prix unitaire: {{ produit.prix }}</p>
+                                                {% for  key,value in panier %}
+                                                    {% if value.id_produit == produit.id %}
+                                                        <strong>Quantité: </strong>{{ value.qtite }}<br>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <br>
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="liste_commande important-text customBorderColor">
+                                    <p><strong>Votre adresse</strong> - {{ app.user.addresse }}</p>
+                                    <a href="#" id="valider_commande"
+                                       class="supprimer_de_panier disabled_a ajouter_au_panier btn button-additional font-additional font-weight-normal text-uppercase hvr-rectangle-out hover-focus-bg before-bg">
+                                                                <span class="icon-check"
+                                                                      aria-hidden="true"></span>
+                                        Valider commande
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="liste_panier important-text customBorderColor">Liste des produits ajoutés a
+                                votre panier.
+                            </div>
+                            <div class="liste_panier products-cat clearfix">
+                                <ul class="products-list">
+                                    {% for produit in produits %}
+                                        {% if produit is not null %}
+                                            <input type="hidden" id="prod{{ produit.id }}" value="{{ produit.id }}">
+                                            <li id="produit{{ produit.id }}" class="wow fadeInUp produit-valeurs"
+                                                data-wow-delay="0.3s"
+                                                style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                                                <div class="product-list_item row">
+                                                    <div class="product-list_item_img col-lg-4 col-md-4 col-sm-4 col-xs-12 clearfix">
+                                                        <a href="#" class="disabled_a">
+                                                            {#img 270*285#}
+                                                            {#<img class="product-list_item_img hvr-grow-rotate" src="{{ asset('front/media/270x285/2.jpg') }}" alt="Product">#}
+                                                            <img class=" disabled_a product-list_item_img hvr-grow-rotate"
+                                                                 src="{{ asset('') }}{{ produit.image }}" alt="Product"
+                                                                 style="height:285px; width:270px;">
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
+
+                                                        <div class="product-list-info">
+                                                            <div class="product-list_item_title">
+                                                                <h3 id="titre{{ produit.id }}"
+                                                                    class="font-additional font-weight-bold text-uppercase">{{ produit.nomProduit }}</h3>
+                                                            </div>
+                                                            <div class="product-item_price font-additional font-weight-normal customColor">{{ produit.prix }}
+                                                                dt {#<span>$265.00</span>#}</div>
+                                                            <div id="descr{{ produit.id }}"
+                                                                 class="product-list_item_desc font-main font-weight-normal color-third">
+                                                                <strong>Description</strong>
+                                                                <br>{{ produit.description }}
+                                                                <br><br><strong>Categorie</strong><br> {{ produit.categorie.nom }}
+                                                                <br><br>
+                                                                {% for  key,value in panier %}
+                                                                    {% if value.id_produit == produit.id %}
+                                                                        <strong>Quantité:</strong> <br>
+                                                                        <div class="product-counter pull-left">
+                                                                            <input class="font-main font-weight-normal"
+                                                                                   type="number" name="product-qty"
+                                                                                   id="qtite{{ produit.id }}"
+                                                                                   value="{{ value.qtite }}"
+                                                                                   readonly="readonly">
+                                                                            {#<div class="productCounter addQuantity font-main hover-focus-color" data-counter-step="1" data-counter-type="add" data-counter-field="#productQuantity">+</div>
+                                                                            <div class="productCounter minusQuantity font-main hover-focus-color" data-counter-step="1" data-counter-type="minus" data-counter-field="#productQuantity">-</div>#}
+                                                                            <input type="hidden" class="quantite_valeur"
+                                                                                   value="{{ value.qtite }}">
+                                                                            <input type="hidden" class="prix_valeur"
+                                                                                   value="{{ produit.prix }}">
+                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                            <a href="#" id="{{ produit.id }}"
+                                                               class="supprimer_de_panier disabled_a ajouter_au_panier btn button-additional font-additional font-weight-normal text-uppercase hvr-rectangle-out hover-focus-bg before-bg">
+                                                                <span class="icon-close"
+                                                                      aria-hidden="true"></span>
+                                                                Retirer du panier
+                                                            </a>
+                                                            {#<a href="#"
+                                                               class=" disabled_a btn button-border font-additional font-weight-normal text-uppercase hvr-rectangle-out hover-focus-border hover-focus-bg before-bg">
+                                                                <span class="icon-close" aria-hidden="true"></span>
+                                                            </a>#}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+    <script>
+        var somme = Number(0);
+
+        function updateCalcul() {
+            somme = Number(0);
+            calcul();
+            $('#prix_total').text(somme);
+        }
+
+        function calcul() {
+            $('.produit-valeurs').each(function (index, value) {
+                var quantite_val = Number($(this).find('.quantite_valeur').val());//Number($('.quantite_valeur').val());
+                var prix_val = Number($(this).find('.prix_valeur').val());
+                somme = somme + (quantite_val * prix_val);
+            });
+        }
+
+        $(document).ready(function () {
+            $('.liste_commande').hide(0);
+            somme = Number(0);
+            calcul();
+            console.log(somme);
+            $('#prix_total').text(somme);
+        });
+
+        $(".disabled_a").click(function (e) {
+            e.preventDefault()
+        });
+
+        $(".supprimer_de_panier").click(function () {
+                //alert('click');
+                var produit_id = this.id;
+                var qtite = $('#qtite' + produit_id).val();
+                $.ajax({
+                    url: '{{ path('supprimer_du_panier') }}',
+                    type: 'POST',
+                    data: {
+                        'qtite': qtite,
+                        'produit_id': produit_id
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        //alert('success');
+                        console.log(data);
+                        var qtitetot = Number($('#qtite_panier').text());
+                        var num = 0;
+                        num = Number(qtitetot - qtite);
+                        $('#qtite_panier').text(num);
+                        $('#produit' + produit_id).append(
+                            '<div id="succ" class="alert alert-success">'
+                            + '<center><strong>'
+                            + 'Le produit a été retiré de votre panier!'
+                            + '</strong></center>'
+                            + '</div>');
+                        $('#succ').hide(0).slideDown(1000).delay(500).slideUp(1000);
+                        setTimeout(function () {
+                            $('#produit' + produit_id).remove();
+                            updateCalcul();
+                        }, 4000);
+                        /*setTimeout(function () {
+                            updateCalcul();
+                        }, 4000);*/
+                        $('#produitc'+produit_id).remove();
+
+                        console.log(data);
+                    }, error: function (data) {
+                        alert('An error occured');
+                        console.log(data);
+                    }
+                })
+            }
+        );
+
+        $("#valider_commande").click(function () {
+                $.ajax({
+                    url: '{{ path('creer_commande') }}',
+                    type: 'POST',
+                    data: {
+                        'user_id': {{ app.user.id }}
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        //alert('success');
+                        console.log(data);
+                        /*var qtitetot = Number($('#qtite_panier').text());
+                        var num = 0;
+                        num = Number(qtitetot - qtite);
+                        $('#qtite_panier').text(num);
+                        $('#produit' + produit_id).append(
+                            '<div id="succ" class="alert alert-success">'
+                            + '<center><strong>'
+                            + 'Le produit a été retiré de votre panier!'
+                            + '</strong></center>'
+                            + '</div>');
+                        $('#succ').hide(0).slideDown(1000).delay(500).slideUp(1000);
+                        setTimeout(function () {
+                            $('#produit' + produit_id).remove();
+                            updateCalcul();
+                        }, 4000);
+                        /!*setTimeout(function () {
+                            updateCalcul();
+                        }, 4000);*!/
+                        $('#produitc'+produit_id).remove();
+
+                        console.log(data);*/
+                    }, error: function (data) {
+                        alert('An error occured');
+                        console.log(data);
+                    }
+                })
+            }
+        );
+
+        $(".btn_commande").click(function () {
+            $('.liste_commande').toggle(1500);
+        });
+    </script>
+{% endblock %}

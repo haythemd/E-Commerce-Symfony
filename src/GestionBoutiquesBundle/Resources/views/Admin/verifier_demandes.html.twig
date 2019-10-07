@@ -1,0 +1,78 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}GestionBoutiquesBundle:Admin:verifierDemandes{% endblock %}
+{% block cnx %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p>{{ app.user.username }}</p>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <h2>Liste des demandes de boutiques.</h2>
+    <br><br>
+
+    <div id="mondiv">
+        {% for demande in demandes %}
+            <div id="dm{{ demande.id }}">
+                <div class="blog-preview_item wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="blog-preview_info">
+                        <h4 class="blog-preview_title font-additional font-weight-bold text-uppercase">Nom
+                            d'utilisateur:{{ demande.user.username }}</h4>
+                        <div class="blog-preview_desc font-main font-weight-normal">Date de
+                            demande:{{ demande.dateDebut|date('Y/M/D') }}<br>Nom:{{ demande.user.nom }}
+                            <br>Prenom:{{ demande.user.prenom }}</div>
+                        <div class="cart-buttons">
+                            <button class="accepter btn btn-white font-additional font-weight-bold hvr-shutter-out-horizontal before-bg"
+                                    id="{{ demande.id }}">ACCEPTER
+                            </button>
+                            <button
+                                    class="refuser btn btn-white font-additional font-weight-bold hvr-shutter-out-horizontal before-bg"
+                                    id="{{ demande.id }}">REFUSER
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/jquery-3.3.1.js') }}"></script>
+    <script>
+        $(".refuser").click(function () {
+                var dmde = 'dm' + this.id;
+                $.ajax({
+                    url: '{{ path('verifier_demandes') }}',
+                    type: 'POST',
+                    data: {'id_demande': this.id, 'val': 'refuser'},
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#' + dmde).remove();
+                    },
+                    error: function (data) {
+                        alert('error');
+                    }
+                })
+
+            }
+        );
+
+        $(".accepter").click(function () {
+                var dmde = 'dm' + this.id;
+                $.ajax({
+                    url: '{{ path('verifier_demandes') }}',
+                    type: 'POST',
+                    data: {'id_demande': this.id, 'val': 'accepter'},
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#' + dmde).remove();
+                    },
+                    error: function (data) {
+                        alert('error');
+                    }
+                })
+
+            }
+        );
+    </script>
+{% endblock %}
+

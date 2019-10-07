@@ -1,0 +1,465 @@
+{% extends "::base.html.twig" %}
+
+ {% block title %} Espace boutique {% endblock %}
+{% block banner_title %}Votre espace boutique{% endblock %}
+{#{% block header_content %}
+    Espace de gestion de votre boutique
+{% endblock %}#}
+
+{% block content %}
+    <br><br>
+    {% if msg=='' %}
+        <div class="container">
+            <div class="row">
+                <div class="sidebar col-lg-3 col-md-3 col-sm-3 col-xs-12 clearfix">
+                    <h3 class="sidebar-title font-additional font-weight-bold text-uppercase customColor wow fadeInUp freff"
+                        data-wow-delay="3.3s">MENU</h3>
+                    <ul class="categories-tree wow fadeInUp" data-wow-delay="0.3s">
+                        <li>
+                            <a id="bt_ajouter"
+                               href="#"
+                               class="disabled_a font-additional font-weight-normal hover-focus-color color-third text-uppercase">
+                                <span class="pull-left">Ajouter produits</span>
+                                {#<span class="pull-right">(8)</span>#}
+                            </a>
+                        </li>
+                        <li>
+                            <a id="bt_modifier"
+                               href="#"
+                               class="disabled_a font-additional font-weight-normal hover-focus-color color-third text-uppercase">
+                                <span class="pull-left">Modifier boutique</span>
+                                {#<span class="pull-right">(19)</span>#}
+                            </a>
+                        </li>
+                        <li>
+                            <a id="bt_produits"
+                               href="#"
+                               class=" disabled_a font-additional font-weight-normal hover-focus-color color-third text-uppercase">
+                                <span class="pull-left">VOS PRODUITS</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="bt_stats"
+                               href="#"
+                               class="disabled_a font-additional font-weight-normal hover-focus-color color-third text-uppercase">
+                                <span class="pull-left">Statistiques</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <h3 class="sidebar-title font-additional font-weight-bold text-uppercase customColor wow fadeInUp"
+                        data-wow-delay="0.3s">Dernier produits vendus</h3>
+                    <ul class="sidebar-popular-product wow fadeInUp" data-wow-delay="0.3s">
+                        {% for prodVendu in prodVendu %}
+                            <li>
+                                <a class="popular-product-item" href="">
+                                    <img class=""
+                                         src="{{ asset('') }}{{ prodVendu.image }}" alt="Product"
+                                         style="height:80px; width:80px;">
+                                    {#<img src="" alt="Product">#}
+                                    <span class="popular-product-item_title font-additional font-weight-bold text-uppercase">{{ prodVendu.nomProduit }}</span>
+                                    <span class="popular-product-item_price font-additional color-third">{{ prodVendu.prix }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 clearfix">
+                    {% if produits is empty %}
+                        <div class="alert alert-info">
+                            <center><strong>Vous n'avez pas de produit dans votre boutique</strong></center>
+                        </div>
+                        <br>
+                    {% endif %}
+                    <div class="esp-aff products-cat clearfix">
+                        {# ============ STATS ++++++++++++++++++++++++++++++++++++#}
+                         <div class="contenu" id="stats_show">
+                        {#{{ render(controller('GestionBoutiquesBundle:Gestion:chart')) }}#}
+                         </div>
+                        {#  ============= MODIF PRODUIT =========================#}
+                        <div id="form_modif_prod" class="contenu">
+                            <input id="id_prod_modif" type="hidden" value="">
+                            <div class="form-group half-wigth pull-left">
+                                <p>Nom</p>
+                                <input id="nom_p"
+                                       type="text"
+                                       class="reply-field font-additional font-weight-normal color-third"
+                                       placeholder="NOM"
+                                >
+                            </div>
+                            <p>Description</p>
+                            <div class="form-group half-wigth pull-left">
+                                <input id="description_p"
+                                       type="text"
+                                       class="reply-field font-additional font-weight-normal color-third"
+                                       placeholder="DESCRIPTION"
+                                >
+                            </div>
+                            <p>Prix</p>
+                            <div class="form-group half-wigth pull-left">
+                                <input id="prix_p"
+                                       type="text"
+                                       class="reply-field font-additional font-weight-normal color-third"
+                                       placeholder="Prix"
+                                >
+                            </div>
+
+                            <button id="bt_enr_modif"
+                                    class="accepter btn btn-white font-additional font-weight-bold hvr-shutter-out-horizontal before-bg">
+                                Enregistrer modifications
+                            </button>
+                            <br><br>
+                        </div>
+                        {#  ============= MODIF BOUTIQUE ========================#}
+                        <div id="form_modif" class="contenu">
+                            <div class="form-group half-wigth pull-left">
+                                <p>Nom</p>
+                                <input id="nom_b"
+                                       type="text"
+                                       class="reply-field font-additional font-weight-normal color-third text-uppercase"
+                                       placeholder="NOM"
+                                       value="{{ boutique.nomBoutique }}">
+                            </div>
+                            <p>Description</p>
+                            <div class="form-group half-wigth pull-left">
+                                <input id="description_b"
+                                       type="text"
+                                       class="reply-field font-additional font-weight-normal color-third text-uppercase"
+                                       placeholder="DESCRIPTION"
+                                       value="{{ boutique.description }}">
+                            </div>
+                            <p>Lieu</p>
+                            <div class="form-group half-wigth pull-left">
+                                <input id="lieu_b"
+                                       type="text"
+                                       class="reply-field font-additional font-weight-normal color-third text-uppercase"
+                                       placeholder="Lieu"
+                                       value="{{ boutique.lieu }}">
+                            </div>
+                            <p>Date</p>
+                            <div class="form-group half-wigth pull-left">
+                                <input id="date_b"
+                                       type="text"
+                                       class="reply-field font-additional font-weight-normal color-third text-uppercase"
+                                       disabled
+                                       value="{{ boutique.dateCeation|date('D/M/Y') }}">
+                            </div>
+                            <input id="id_boutique" type="hidden" value="{{ id_boutique }}">
+                            <button id="modifier"
+                                    class="accepter btn btn-white font-additional font-weight-bold hvr-shutter-out-horizontal before-bg">
+                                Enregistrer modifications
+                            </button>
+                            <br><br>
+                        </div>
+                        {#  ==================== AJOUT PROD 2========================#}
+                        <div id="form_ajout" class="contenu">
+                            {{ form_start(form) }}
+                            <div class="form-group half-wigth pull-left">
+                                {{ form_widget(form.nomProduit, { 'attr': {'class': 'reply-field font-additional font-weight-normal color-third', 'placeholder': 'Nom' } }) }}
+                            </div>
+                            <div class="form-group half-wigth pull-left">
+                                {{ form_widget(form.description, { 'attr': {'class': 'reply-field font-additional font-weight-normal color-third', 'placeholder': 'Description' } }) }}
+                            </div>
+                            <div class="form-group half-wigth pull-left">
+                                {{ form_widget(form.prix, { 'attr': {'class': 'reply-field font-additional font-weight-normal color-third', 'placeholder': 'Prix' } }) }}
+                            </div>
+                            <div class="form-group half-wigth pull-left">
+                                {{ form_widget(form.categorie, { 'attr': {'class': 'reply-field font-additional font-weight-normal color-third'} }) }}
+                            </div>
+                            <div class="form-group half-wigth pull-left">
+                                {{ form_widget(form.image, { 'attr': {'class': 'reply-field font-additional font-weight-normal color-third' } }) }}
+                            </div>
+                            <div class="form-group half-wigth pull-left">
+                                {{ form_widget(form.ajouter, { 'attr': {'class': 'accepter btn btn-white font-additional font-weight-bold hvr-shutter-out-horizontal before-bg' } }) }}
+                            </div>
+
+                            {#{{ form_row(form.image) }}#}
+                            {{ form_end(form) }}
+                        </div>
+
+                        {##}
+                        <div class="content-box">
+                            <div class="products-cat clearfix">
+                                <ul id="liste_produits" class="products-grid contenu">
+
+                                    <!-- ONE PRODUCT STARTS HERE -->
+                                    {% for produit in produits %}
+                                        <li id="prod{{ produit.id }}" class="wow fadeInUp" data-wow-delay="0.3s">
+                                            <div class="product-item hvr-underline-from-center">
+                                                <div class="product-item_body">
+                                                    <img class="product-item_image"
+                                                         src="{{ asset('') }}{{ produit.image }}" alt="Product"
+                                                         style="height:240px; width:220px;">
+                                                    <a class="disabled_a product-item_link" href="#">
+                                                        {#REMISE#}
+                                                        {#<span class="product-item_sale color-main font-additional customBgColor circle">-15%</span>#}
+                                                    </a>
+                                                    <ul class="product-item_info transition">
+                                                        <li>
+                                                            <a class="disabled_a bt_modif_prod" id="{{ produit.id }}" href="#">
+                                                                <span class="icon-pencil" aria-hidden="true"></span>
+                                                                <div class="product-item_tip font-additional font-weight-normal text-uppercase customBgColor color-main transition">
+                                                                    MODIFIER
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="supp_prod disabled_a" id="{{ produit.id }}">
+                                                                <span class="icon-close" aria-hidden="true"></span>
+                                                                <div class="product-item_tip font-additional font-weight-normal text-uppercase customBgColor color-main transition">
+                                                                    SUPPRIMER
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <a href="" class="disabled_a product-item_footer">
+                                                    <div class="product-item_title font-additional font-weight-bold text-center text-uppercase">
+                                                        {{ produit.nomProduit }}
+                                                    </div>
+                                                    <div class="product-item_price font-additional font-weight-normal customColor">
+                                                        {{ produit.prix }}dt {#<span>$265.00</span>#}</div>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                    <!-- ONE PRODUCT ENDS HERE-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="important-text customBorderColor">Lieu de votre boutique.</div>
+                    {#MAPS HERE#}
+                    <div id="map" style="width: 100%; height: 220px;"></div>
+                    {#END MAPS#}
+                </div>
+
+            </div>
+        </div>
+    {% else %}
+        {{ msg }}
+    {% endif %}
+    {#LOAD API MAPS#}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-siudbD1jEhaIebiFGjWEzOd4aq8-WzA"
+            type="text/javascript"></script>
+    <script>
+        ///
+        /*MAPS CODES*/
+        var geocoder;
+        var map;
+        var markersArray = [];
+
+        function initialize() {
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(-34.397, -20.644);
+            var mapOptions = {
+                zoom: 8,
+                center: latlng
+            };
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        }
+
+        function codeAddress(address) {
+            //address = document.getElementById('address').value;
+            geocoder.geocode({'address': address}, function (results, status) {
+                if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        /* END MAPS CODES*/
+        /* ON PAGE LOAD DO THIS*/
+        $(document).ready(function () {
+            $('#form_ajout').hide();
+            $('#form_modif').hide();
+            $('.contenu').hide();
+            $('#liste_produits').show(1500);
+            initialize(); // initialisation de maps
+            var lieu_b = $('#lieu_b').val();
+            codeAddress(lieu_b); // set boutique position.
+        });
+        /*=====================*/
+        $('#bt_stats').click(function () {
+            $('.contenu').hide(0);
+            $('#stats_show').show(500);
+        });
+        /*=====================*/
+        /*=====================*/
+        $('.bt_modif_prod').click(function () {
+            var ce_prod_id = this.id;
+            $('#id_prod_modif').val(ce_prod_id);
+            $('#form_modif_prod').show(500);
+        });
+        /*=====================*/
+        $('#bt_ajouter').click(function () {
+            $('.contenu').hide(500);
+            $('#form_ajout').toggle(1000);
+        });
+        /*=====================================*/
+        $('#bt_modifier').click(function () {
+            $('.contenu').hide(500);
+            $('#form_modif').toggle(1500);
+        });
+        /*======================================*/
+        $("#bt_produits").click(function (e) {
+            $('.contenu').hide(500);
+            $('#liste_produits').toggle(1500);
+        });
+        /*========== MODIF PRODUIT ===========*/
+        $("#bt_enr_modif").click(function () {
+                var id_prod = $('#id_prod_modif').val();
+                var nom_prod = $('#nom_p').val();
+                var description_prod = $('#description_p').val();
+                var prix_prod = $('#prix_p').val();
+
+
+                $.ajax({
+                    url: '{{ path('modifier_produit') }}',
+                    type: 'POST',
+                    data: {
+                        'id_prod': id_prod,
+                        'nom_prod': nom_prod,
+                        'description_prod': description_prod,
+                        'prix_prod': prix_prod
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#form_modif_prod').after(
+                            '<div id="succ_m_p" class="alert alert-success">'
+                            + '<center><strong>'
+                            + 'Les données de votre produit on été mis a jour.'
+                            + '</strong></center>'
+                            + '</div>');
+                        $('#succ_m_p').hide(0).slideDown(500).delay(2000).slideUp(500);
+                    },
+                    error: function (data) {
+                        $('#form_modif_prod').after(
+                            '<div id="err" class="alert alert-danger">'
+                            + '<center><strong>'
+                            + 'Erreur lors de la modification.'
+                            + '</strong></center>'
+                            + '</div>');
+                        $('#err').hide(0).show(1500).delay(1000).hide(1500);
+                    }
+                })
+            }
+        );
+        /*========== MODIF BOUTIQUE ===========*/
+        $("#modifier").click(function () {
+                //var dmde = 'dm' + this.id;
+                var nom_b = $('#nom_b').val();
+                var desc_b = $('#description_b').val();
+                var lieu_b = $('#lieu_b').val();
+                var id_boutique = $('#id_boutique').val();
+                $.ajax({
+                    url: '{{ path('modifier_boutique') }}',
+                    type: 'POST',
+                    data: {
+                        'nom_b': nom_b,
+                        'desc_b': desc_b,
+                        'lieu_b': lieu_b,
+                        'id_boutique': id_boutique
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#form_modif').after(
+                            '<div id="succ_m" class="alert alert-success">'
+                            + '<center><strong>'
+                            + 'Les données de votre boutique ont été mis a jour.'
+                            + '</strong></center>'
+                            + '</div>');
+                        $('#succ_m').hide(0).slideDown(500).delay(2000).slideUp(500);
+                        codeAddress(lieu_b);
+                    },
+                    error: function (data) {
+                        $('#form_modif').after(
+                            '<div id="err" class="alert alert-danger">'
+                            + '<center><strong>'
+                            + 'Erreur lors de la modification.'
+                            + '</strong></center>'
+                            + '</div>');
+                        $('#err').hide(0).show(1500).delay(1000).hide(1500);
+                    }
+                })
+            }
+        );
+        /*======== AJAX AJOUT PROD==========*/
+        $("#ajouter").click(function () {
+                //var dmde = 'dm' + this.id;
+                var nom_p = $('#nom_p').val();
+                var desc_p = $('#description_p').val();
+                var prix_p = $('#prix_p').val();
+                var id_categorie = $('#categorie_p').val();
+                var id_boutique = $('#id_boutique').val();
+                $.ajax({
+                    url: '{{ path('ajout_produit_boutique') }}',
+                    type: 'POST',
+                    data: {
+                        'nom_p': nom_p,
+                        'desc_p': desc_p,
+                        'prix_p': prix_p,
+                        'id_categorie': id_categorie,
+                        'id_boutique': id_boutique
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#form_ajout').after(
+                            '<div id="succ" class="alert alert-success">'
+                            + '<center><strong>'
+                            + 'Produit ajouté avec succés'
+                            + '</strong></center>'
+                            + '</div>');
+                        $('#succ').hide(0).slideDown(500).delay(2000).slideUp(500);
+                    },
+                    error: function (data) {
+                        $('#form_ajout').after(
+                            '<div id="err" class="alert alert-danger">'
+                            + '<center><strong>'
+                            + 'Erreur lors de l\'ajout'
+                            + '</strong></center>'
+                            + '</div>');
+                        $('#err').hide(0).show(1500).delay(1000).hide(1500);
+                    }
+                })
+            }
+        );
+        /////////// SUPP PROD ///////////
+        $(".supp_prod").click(function () {
+                var id_prod = this.id;
+                $.ajax({
+                    url: '{{ path('supprimer_prod') }}',
+                    type: 'POST',
+                    data: {
+                        'id_prod': id_prod
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#prod' + id_prod).append('<div id="msgsucc" class="alert alert-success">'
+                            + '<center><strong>'
+                            + 'Produit supprimé avec succés'
+                            + '</strong></center>'
+                            + '</div>').delay(1500).slideUp(500);
+                        //$('#msgsucc').delay(1000).slideUp(500);
+                        //$('#prod'+id_prod).remove();
+                    },
+                    error: function (data) {
+                        alert('Erreur lors de la suppression.')
+                    }
+                })
+            }
+        );
+        ///////////////////////////////
+        $(".disabled_a").click(function (e) {
+            e.preventDefault()
+        });
+
+    </script>
+{% endblock %}
+
+{#===========================================#}

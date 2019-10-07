@@ -1,0 +1,80 @@
+{% for gerant in gerants %}
+    <input type="hidden" class="boutique" id="{{ gerant.boutique.id }}" value="{{ gerant.boutique.lieu }}">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 clearfix">
+        {#<div style="position: static" class="important-text customBorderColor">
+            <span class="font-third font-weight-light pull-left">{{ gerant.boutique.description }}</span>
+        </div>#}
+        <br>
+        <div class="blog-preview-small wow fadeInLeft" data-wow-delay="0.8s"
+             style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+            <div id="map{{ gerant.boutique.id }}" style="width: 100%; height: 220px;"></div>
+            <a href="#" class="blog-preview-small_link">
+                <div class="blog-preview_posted">
+                    <span class="blog-preview_date font-additional font-weight-bold text-uppercase">{{ gerant.boutique.nomBoutique }}</span>
+                    <span class="blog-preview_comments font-additional font-weight-normal text-uppercase">{{ gerant.boutique.produits.count }}
+                        Produits</span>
+                </div>
+            </a>
+        </div>
+        <a href="{{ path('afficher_prods_boutiques',{'id_gerant':gerant.id}) }}"
+           class="blog-preview-small_more button-border font-additional font-weight-normal before-bg text-uppercase hvr-rectangle-out hover-focus-bg wow fadeInLeft"
+           data-wow-delay="0.3s"
+           style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInLeft;">Visiter</a>
+    </div>
+{% endfor %}
+<script src="{{ asset('assets/js/plugins/jquery-3.3.1.js') }}"></script>
+<script>
+    var boutiqueidArray = [];
+    var geocoder;
+    var map;
+    var maps = [];
+    var markersArray = [];
+    ////// APPEL INITIALISATION MARKERS
+
+    $(document).ready(function () {
+        console.log('remplissage boutiqueidArray!');
+        $(".boutique").each(function (index) {
+            console.log(index + " -> " + this.id);
+            //var id_boutiue = this.id;
+            boutiqueidArray.push(this.id);
+        });
+
+        $.each(boutiqueidArray, function (index, value) {
+            var une_adresse = $('#' + value).val();
+            console.log('id boutique: ' + value + ' about to initialize: ' + une_adresse);
+            initialize(value);
+            codeAddress(une_adresse, index);
+        });
+
+    });
+
+    /*MAPS CODES*/
+    function initialize(id_boutique_map) {
+        console.log('geocoding');
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+            zoom: 10,
+            center: latlng
+        };
+        //map = new google.maps.Map(document.getElementById('map'+id_boutique_map), mapOptions);
+        maps.push(new google.maps.Map(document.getElementById('map' + id_boutique_map), mapOptions));
+        console.log('Map de: map' + id_boutique_map);
+    }
+
+    function codeAddress(address, ind) {
+        console.log('codage addresse: ' + address);
+        geocoder.geocode({'address': address}, function (results, status) {
+            if (status === 'OK') {
+                maps[ind].setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: maps[ind],
+                    position: results[0].geometry.location
+                });
+                //map=null;
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+</script>

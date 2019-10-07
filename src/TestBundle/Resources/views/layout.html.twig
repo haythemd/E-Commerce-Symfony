@@ -1,0 +1,272 @@
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Souk Lemdina</title>
+    <link rel="shortcut icon" type="image/x-icon" href="" />
+
+    <link href="{{ asset('front/css/master.css') }}" rel="stylesheet">
+    <link href="{{ asset('front/css/header3.css') }}" rel="stylesheet">
+
+    <!-- SWITCHER -->
+    <link rel="stylesheet" id="switcher-css" type="text/css" href="{{ asset('front/plugins/switcher/css/switcher.css') }}" media="all" />
+    <link rel="alternate stylesheet" type="text/css" href="{{ asset('front/plugins/switcher/css/color1.css') }}" title="color1" media="all" />
+    <link rel="alternate stylesheet" type="text/css" href="{{ asset('front/plugins/switcher/css/color2.css') }}" title="color2" media="all" />
+    <link rel="alternate stylesheet" type="text/css" href="{{ asset('front/plugins/switcher/css/color3.css') }}" title="color3" media="all" />
+    <link rel="alternate stylesheet" type="text/css" href="{{ asset('front/plugins/switcher/css/color4.css') }}" title="color4" media="all" />
+    <link rel="alternate stylesheet" type="text/css" href="{{ asset('front/plugins/switcher/css/color5.css') }}" title="color5" media="all" />
+
+    <script src="{{ asset('front/js/jquery-1.11.2.min.js') }}"></script>
+    <script src="{{ asset('front/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
+
+
+</head>
+<body class="animated-css home-construction-v3" data-scrolling-animations="true">
+<div class="sp-body">
+    <!-- Loader Landing Page -->
+    <div id="ip-container" class="ip-container">
+        <div class="ip-header" >
+            <div class="ip-loader">
+                <div class="text-center">
+                    <div class="ip-logo">
+                        <a class="logo"></a>
+                    </div>
+                </div>
+                <svg class="ip-inner" width="100" height="100">
+                    <path class="ip-loader-circlebg" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,39.3,10z"/>
+                    <path id="ip-loader-circle" class="ip-loader-circle" d="M40,10C57.351,10,71,23.649,71,40.5S57.351,71,40.5,71 S10,57.351,10,40.5S23.649,10,40.5,10z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <!-- Loader end -->
+    <!-- Start Switcher -->
+    <div class="switcher-wrapper">
+        <div class="demo_changer">
+            <div class="demo-icon customBgColor"><i class="fa fa-cog fa-spin fa-2x"></i></div>
+
+        </div>
+    </div>
+    <!-- End Switcher -->
+    {% block a %}
+        <header id="header" class="paralax header" style="background-image: url({{ asset('front/media/paralax/1.jpg') }});">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-container clearfix">
+                        <a href="#" class="logo pull-left"></a>
+                        <div class="header-nav navbar navbar-main-slide pull-left">
+                            <i class="fa fa-bars mobileMenuNav mobileMenuSwitcher onlyMobile"></i>
+                            <nav class="menu-container">
+                                <i class="fa fa-times close-menu mobileMenuSwitcher onlyMobile"></i>
+                                <ul class="nav navbar-nav navbar-main">
+                                    <li class="dropdown active">
+                                    <li><a href="#">ACCUEIL</a></li>
+                                    <li class="dropdown">
+                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">BOUTIQUES<i class="fa fa-angle-down customColor"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Créez boutique</a></li>
+                                            <li><a href="#">Visiter boutiques</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a data-toggle="dropdown" class="dropdown-toggle" href="">PRODUITS<i class="fa fa-angle-down customColor"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Déposer votre annonce</a></li>
+                                            <li><a href="">Consulter produits</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="">FAQ</a></li>
+                                    <li><a href="">ACTUALITES</a></li>
+
+                                    <li class="dropdown">
+                                        <a data-toggle="dropdown" class="dropdown-toggle" href="">EVENEMENTS<i class="fa fa-angle-down customColor"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">Créer un evenement</a></li>
+                                            <li><a href="">Consulter evenements</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="header-right pull-right">
+                            <ul class="header-right-nav">
+                                <li><a href="#" class="font-additional color-main text-uppercase hover-focus-color">MON COMPTE</a></li>
+                                <li><a href="#" data-target=".example-modal-lg" data-toggle="modal" class="font-additional color-main text-uppercase hover-focus-color"><span class="font-icon icon-magnifier" aria-hidden="true"></span></a></li>
+                                <li class="header-cart">
+                                    <a href="#" class="font-additional color-main text-uppercase hover-focus-color">
+                                        <span class="font-icon icon-bag" aria-hidden="true"></span>
+                                        <span class="cart-qty font-main font-weight-semibold color-main customBgColor circle">2</span>
+                                    </a>
+                                    <div class="header-cart_product clearfix">
+                                        <h3 class="font-additional font-weight-bold">Recently added item(s)</h3>
+                                        <ul class="header-cart_product_list"></ul>
+                                    </div>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# HINT TIP EDIT div: contenu du header#}
+            <div class="container header-content">
+                <span class="header-subtitle font-third font-weight-light color-main wow zoomIn" data-wow-delay="0.5s">get upto %70 off</span>
+
+            </div>
+            <div class="header-overlay"></div>
+        </header>
+
+        <section id="slider" class="slider-container slider-top-pagination">
+            <div class="container">
+                <h2 class="title font-additional font-weight-bold text-uppercase wow zoomIn" data-wow-delay="0.3s">Bienvenue a Souk El Medina</h2>
+                {% block fos_user_content %}
+
+                {% endblock %}
+            </div>
+        </section>
+
+    {% endblock %}
+
+    {% block b %}
+
+    {% endblock %}
+{#================================================================================================================================================#}
+    <footer id="footer">
+        <a class="goToTop font-additional color-main text-uppercase" href="#" id="scrollTop">
+            <i class="fa fa-angle-up"></i>
+            <span>Top</span>
+        </a>
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 clearfix wow fadeInLeft" data-wow-delay="0.3s">
+                        <a href="#" class="footer-top_logo"></a>
+                        <div class="footer-top_container clearfix">
+                            <span class="font-main font-weight-normal color-additional">Proin est Pellentesque risus magna vulput vitae sodales uam morbi non sem lacus por mollis. Nunc condime ntum metus eud Ino lestie. Sed consectetuer. Lorem ipsum dolor amet ectetur adipisicing elit sed doincl.</span>
+                            <ul class="footer-social-list">
+                                <li><a href="#"><span class="social_facebook" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="social_twitter" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="social_googleplus" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="social_pinterest" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="social_youtube" aria-hidden="true"></span></a></li>
+                                <li><a href="#"><span class="social_instagram" aria-hidden="true"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 clearfix wow fadeInUp" data-wow-delay="0.3s">
+                        <h4 class="footer-top_title color-main font-additional font-weight-bold text-uppercase">QUICK LINKS</h4>
+                        <div class="footer-top_container clearfix">
+                            <ul class="footer-nav">
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> My Account</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> Order History</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> My Wishlist</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> Order Tracking</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> Shipping Information</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> Gift Vouchers</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 clearfix wow fadeInUp" data-wow-delay="0.3s">
+                        <h4 class="footer-top_title color-main font-additional font-weight-bold text-uppercase">INFORMATION</h4>
+                        <div class="footer-top_container clearfix">
+                            <ul class="footer-nav">
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> About us</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> Delivery Information</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> Terms & Conditions</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> Privacy Policy</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> Contact us</a></li>
+                                <li><a href="#" class="font-main font-weight-normal color-additional"><i class="fa fa-angle-right customColor"></i> Return Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 clearfix wow fadeInRight" data-wow-delay="0.3s">
+                        <h4 class="footer-top_title color-main font-additional font-weight-bold text-uppercase">GET IN TOUCH</h4>
+                        <div class="footer-top_container clearfix">
+                            <ul class="footer-contact">
+                                <li class="font-main font-weight-normal color-additional">
+                                    <span class="icon_pin" aria-hidden="true"></span>
+                                    23 Zevra Hall, Luton Street <br>New York 226688
+                                </li>
+                                <li class="font-main font-weight-normal color-additional oneLine">
+                                    <span class="icon_phone" aria-hidden="true"></span>
+                                    +10 (987) 6541 023
+                                </li>
+                                <li class="font-main font-weight-normal color-additional oneLine">
+                                    <span class="icon_mail" aria-hidden="true"></span>
+                                    info@templines.com
+                                </li>
+                                <li class="font-main font-weight-normal color-additional">
+                                    <span class="icon_clock" aria-hidden="true"></span>
+                                    Mon to Sat : 9:25 AM - 7:30 PM <br>Sun : 11:30 PM - 4:30 PM
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 clearfix">
+                        <span class="footer_copyright color-additional font-main font-weight-light wow fadeInLeft" data-wow-delay="0.3s">Created With <span class="icon_heart customColor" aria-hidden="true"></span> by <span class="font-main font-weight-semibold">Templines</span> &copy; 2015 All rights reserved.</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 clearfix">
+                        <ul class="footer-payments pull-right wow fadeInRight" data-wow-delay="0.3s">
+                            <li><img src="{{ asset('front/media/payments/1.jpg') }}" alt="Payments"></li>
+                            <li><img src="{{ asset('front/media/payments/2.jpg') }}" alt="Payments"></li>
+                            <li><img src="{{ asset('front/media/payments/3.jpg') }}" alt="Payments"></li>
+                            <li><img src="{{ asset('front/media/payments/4.jpg') }}" alt="Payments"></li>
+                            <li><img src="{{ asset('front/media/payments/5.jpg') }}" alt="Payments"></li>
+                            <li><img src="{{ asset('front/media/payments/6.jpg') }}" alt="Payments"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div aria-hidden="false" role="dialog" tabindex="-1" class="modal fade example-modal-lg search-wrapper in">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <p class="clearfix"><button data-dismiss="modal" class="close" type="button"><span class="icon_close color-main" aria-hidden="true"></span></button></p>
+                <form role="form" class="form-inline form-search">
+                    <div class="form-group">
+                        <label for="textsearch" class="sr-only">Enter text search</label>
+                        <input type="text" placeholder="Enter text search" id="textsearch" class="form-control input-lg font-main font-weight-normal color-main">
+                    </div>
+                    <button class="btn btn-white font-additional font-weight-normal color-main text-uppercase hover-focus-bg" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {#
+    -----------------------------------SCRIPT------------------------
+    #}
+    <script src="{{ asset('front/js/modernizr.custom.js') }}"></script>
+    <script src="{{ asset('front/js/jquery.placeholder.min.js') }}"></script>
+    <script src="{{ asset('front/js/smoothscroll.min.js') }}"></script>
+    <!-- Loader -->
+    <script src="{{ asset('front/plugins/loader/js/classie.js') }}"></script>
+    <script src="{{ asset('front/plugins/loader/js/pathLoader.js') }}"></script>
+    <script src="{{ asset('front/plugins/loader/js/main.js') }}"></script>
+    <script src="{{ asset('front/js/classie.js') }}"></script>
+    <!--Owl Carousel-->
+    <script src="{{ asset('front/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
+    <!-- bxSlider -->
+    <script src="{{ asset('front/plugins/bxslider/jquery.bxslider.min.js') }}"></script>
+    <!--Switcher-->
+    <script src="{{ asset('front/plugins/switcher/js/bootstrap-select.js') }}"></script>
+    <script src="{{ asset('front/plugins/switcher/js/evol.colorpicker.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('front/plugins/switcher/js/dmss.js') }}"></script>
+    <!-- SCRIPTS -->
+    <script type="text/javascript" src="{{ asset('front/plugins/isotope/jquery.isotope.min.js') }}"></script>
+
+    <!--THEME-->
+    <script src="{{ asset('front/js/wow.min.js') }}"></script>
+    <script src="{{ asset('front/js/cssua.min.js') }}"></script>
+    <script src="{{ asset('front/js/theme.js') }}"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}GestionBoutiquesBundle:Admin:affecterBoutique{% endblock %}
+
+{% block content %}
+    <h1>
+        Nom:{{ user.nom }}<br>
+        ID:{{ user.id }}<br>
+        Username:{{ user.username }}<br>
+        Date demande:{{ gerant.dateDebut|date('y/m/d') }}
+        <br>
+        <input type="text" name="nom_b" placeholder="Nom de la boutique">
+        <input type="text" name="description_b" placeholder="Description">
+        <input type="date" name="date_b">
+        <input type="text" name="lieu_b" placeholder="Lieu">
+        <input type="button" value="Créer" class="creer">
+        <p id="succ"></p>
+    </h1>
+<script type="text/javascript" src="{{ asset('assets/js/plugins/jquery-3.3.1.js') }}"></script>
+<script>
+    $(".creer").click(function ()
+        {
+            var nom_b = $('input[name=nom_b]');
+            var description_b = $('input[name=description_b]');
+            var date_b = $('input[name=date_b]');
+            var lieu_b = $('input[name=lieu_b]');
+            $.ajax({
+                url: '{{ path('affecter_boutique') }}',
+                type: 'POST',
+                data: {'nom_b': nom_b,'description_b': description_b,'date_b':date_b,'lieu_b':lieu_b},
+                dataType: 'json',
+                success: function (data) {
+                        $('#succ').html('SUCCES');
+                },
+                error: function(data) {
+                    alert('error');
+                }
+            })
+        }
+    );
+</script>
+{% endblock %}

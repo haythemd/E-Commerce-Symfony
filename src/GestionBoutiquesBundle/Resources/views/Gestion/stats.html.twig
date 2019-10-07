@@ -1,0 +1,10 @@
+
+    <div id="div_chart"></div>
+    <div>
+        {#{{ piechart.dataName }}#}
+    </div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        {{ gc_draw(piechart, 'div_chart') }}
+    </script>

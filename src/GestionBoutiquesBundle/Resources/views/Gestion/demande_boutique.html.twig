@@ -1,0 +1,30 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}GestionBoutiquesBundle:Gestion:demandeBoutique{% endblock %}
+
+{% block content %}
+        <p class="parag">Vous n'avez pas encore de boutique, veuillez envoyer une demande a l'administrateur de ce site.</p>
+        <input type="button" value="Envoyer demande" class="envoyer" id="{{ user_id }}">
+
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/jquery-3.3.1.js') }}"></script>
+    <script>
+        $(".envoyer").click(function () {
+                $.ajax({
+                    url: '{{ path('envoi_dmde_vers_admin') }}',
+                    type: 'POST',
+                    data: {'user_id': this.id},
+                    dataType: 'json',
+                    success: function (data) {
+                        $('.parag').html('Demande envoyée');
+                        //alert('success');
+                        console.log(data);
+                        $('.envoyer').remove();
+                    },error: function (data) {
+                        alert('An error occured');
+                        console.log(data);
+                    }
+                })
+            }
+        );
+    </script>
+{% endblock %}
